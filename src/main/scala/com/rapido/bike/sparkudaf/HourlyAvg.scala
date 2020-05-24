@@ -14,7 +14,7 @@ class HourlyAvg() extends UserDefinedAggregateFunction {
 
   def bufferSchema = StructType(Array(
     StructField("totalBookings", IntegerType),
-    StructField("distinctMonthCount", IntegerType),
+    StructField("distinctHourCount", IntegerType),
     StructField("previousYear", IntegerType),
     StructField("currentYear", IntegerType),
     StructField("previousMonth", IntegerType),

@@ -14,7 +14,7 @@ class DailyAvg() extends UserDefinedAggregateFunction {
 
   def bufferSchema = StructType(Array(
     StructField("totalBookings", IntegerType),
-    StructField("distinctMonthCount", IntegerType),
+    StructField("distinctDayhCount", IntegerType),
     StructField("previousYear", IntegerType),
     StructField("currentYear", IntegerType),
     StructField("previousMonth", IntegerType),

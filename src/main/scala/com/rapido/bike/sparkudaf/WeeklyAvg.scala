@@ -14,7 +14,7 @@ class WeeklyAvg() extends UserDefinedAggregateFunction {
 
   def bufferSchema = StructType(Array(
     StructField("totalBookings", IntegerType),
-    StructField("distinctMonthCount", IntegerType),
+    StructField("distinctWeekCount", IntegerType),
     StructField("previousYear", IntegerType),
     StructField("currentYear", IntegerType),
     StructField("previousMonth", IntegerType),

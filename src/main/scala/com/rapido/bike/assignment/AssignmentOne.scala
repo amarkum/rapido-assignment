@@ -24,23 +24,32 @@ object Assignment {
       .master("local")
       .getOrCreate()
 
-    val df = sparkSession.read
+    val dataFrame = sparkSession.read
       .options(Map("header" -> "true", "inferSchema" -> "true"))
       .csv("src/main/resources/rapido/dataset/ct_rr.csv")
 
-    val filtered_df = df
+    /**
+     * As dataset is already in sorted order by ts(timestamp) we can invoke UDAF which compares deviation from previous
+     *
+     * The average is calculated bases on the usage. i.e relative average calculation.
+     * If a user takes only 4 rides in a year 2 in one hour & 3 in any other hour.
+     *
+     * Hourly Avg is Total Rides/Distinct Hours = 2+3/2 = 2.5
+     * and not 2+3/Total Hours in entire Day, Week, Month, Year etc.
+     *
+     */
+    val averagedDataframe = dataFrame
       .groupBy("number")
       .agg(
-        YearlyAvg(df.col("ts")).alias("yearly_avg"),
-        MonthlyAvg(df.col("ts")).alias("monthly_avg"),
-        WeeklyAvg(df.col("ts")).alias("weekly_avg"),
-        DailyAvg(df.col("ts")).alias("daily_avg"),
-        HourlyAvg(df.col("ts")).alias("hourly_avg")
+        YearlyAvg(dataFrame.col("ts")).alias("yearly_avg"),
+        MonthlyAvg(dataFrame.col("ts")).alias("monthly_avg"),
+        WeeklyAvg(dataFrame.col("ts")).alias("weekly_avg"),
+        DailyAvg(dataFrame.col("ts")).alias("daily_avg"),
+        HourlyAvg(dataFrame.col("ts")).alias("hourly_avg")
       )
 
-    filtered_df.printSchema()
-
-    filtered_df
+    averagedDataframe
+      // Flush into a single file for easy viewing
       .repartition(1)
       .write
       .option("header", "true")
@@ -48,6 +57,7 @@ object Assignment {
       .mode("overwrite")
       .csv("src/main/resources/rapido/average/")
 
-    filtered_df.show(20, false)
+    // View sample results in console.
+    averagedDataframe.show(20, false)
   }
 }
