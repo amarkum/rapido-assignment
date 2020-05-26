@@ -14,15 +14,15 @@ class DailyAvg() extends UserDefinedAggregateFunction {
 
   def bufferSchema = StructType(Array(
     StructField("totalBookings", IntegerType),
-    StructField("distinctDayhCount", IntegerType),
+    StructField("distinctDayCount", IntegerType),
     StructField("previousYear", IntegerType),
     StructField("currentYear", IntegerType),
     StructField("previousMonth", IntegerType),
     StructField("currentMonth", IntegerType),
     StructField("previousWeek", IntegerType),
-    StructField("CurrentWeek", IntegerType),
-    StructField("PreviousDay", IntegerType),
-    StructField("CurrentDay", IntegerType)
+    StructField("currentWeek", IntegerType),
+    StructField("previousDay", IntegerType),
+    StructField("currentDay", IntegerType)
   ))
 
   def dataType: DataType = DoubleType

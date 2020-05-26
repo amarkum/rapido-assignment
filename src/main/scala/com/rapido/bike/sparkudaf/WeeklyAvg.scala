@@ -20,7 +20,7 @@ class WeeklyAvg() extends UserDefinedAggregateFunction {
     StructField("previousMonth", IntegerType),
     StructField("currentMonth", IntegerType),
     StructField("previousWeek", IntegerType),
-    StructField("CurrentWeek", IntegerType)
+    StructField("currentWeek", IntegerType)
   ))
 
   def dataType: DataType = DoubleType

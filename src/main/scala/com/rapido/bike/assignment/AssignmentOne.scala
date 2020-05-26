@@ -31,7 +31,7 @@ object Assignment {
     /**
      * As dataset is already in sorted order by ts(timestamp) we can invoke UDAF which compares deviation from previous
      *
-     * The average is calculated bases on the usage. i.e relative average calculation.
+     * The average is calculated based on the usage. i.e relative average calculation.
      * If a user takes only 4 rides in a year 2 in one hour & 3 in any other hour.
      *
      * Hourly Avg is Total Rides/Distinct Hours = 2+3/2 = 2.5
